@@ -111,8 +111,8 @@ ind = np.arange(len(node_collisions))  # x axis locations
 width = 0.3  # the width of the bars
 
 fig, axes = plt.subplots(figsize=(12, 6))
-bar1 = axes.bar(ind - width / 2, node_collisions, width, label='Collisions', color='SkyBlue')
-bar2 = axes.bar(ind + width / 2, node_packets_sent, width, label='Packets Sent', color='IndianRed')
+bar1 = axes.bar(ind - width / 2, node_collisions, width, label='Collisions', color='IndianRed')
+bar2 = axes.bar(ind + width / 2, node_packets_sent, width, label='Packets Sent', color='SkyBlue')
 
 # Attach labels and title, tick marks and legend
 axes.set_xlabel('Node')

@@ -168,18 +168,18 @@ ind = np.arange(len(node_collisions))  # x axis locations
 width = 0.3  # the width of the bars
 
 fig, axes = plt.subplots(figsize=(12, 6))
-bar1 = axes.bar(ind - width / 2, node_collisions, width, label='Collisions', color='SkyBlue')
-bar2 = axes.bar(ind + width / 2, node_packets_sent, width, label='Packets Sent', color='IndianRed')
+bar1 = axes.bar(ind - width / 2, node_collisions, width, label='Collisions', color='IndianRed')
+bar2 = axes.bar(ind + width / 2, node_packets_sent, width, label='Packets Sent', color='SkyBlue')
 
 # Attach labels and title, tick marks and legend
 axes.set_xlabel('Node')
 axes.set_ylabel('Counts')
-axes.set_title(f'Collisions and Packets Comparison Sent by Node in randomAccess protocol.  ')
+axes.set_title(f'Collisions and Packets Comparison Sent by Node in FDM+ randomAccess protocol .  ')
 axes.set_xticks(ind)
 ticks_labels = []
 for band_idx in range(NUM_BANDS):
     for node_idx in range(NUM_NODES_IN_BAND):
-        ticks_labels.append(f"Band {band_idx}Node{node_idx}")
+        ticks_labels.append(f"Band {band_idx+1}Node{node_idx+1}")
 
 axes.set_xticklabels(ticks_labels)
 axes.legend()

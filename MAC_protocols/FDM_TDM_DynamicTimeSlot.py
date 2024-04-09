@@ -86,7 +86,7 @@ for packets in packets_sent:
     total_packets += packets
 
 #Set up plot
-plt.figure(figsize=(12, 6))
+plt.figure(figsize=(16, 6))
 
 # Plotting each band's data
 for band_idx, band_data in enumerate(packets_sent_time):
@@ -113,7 +113,7 @@ plt.show()
 
 #### Plot individual node
 for band_idx, band_data in enumerate(packets_sent_time):
-    plt.figure(figsize=(12, 6))
+    plt.figure(figsize=(22, 6))
 
     # Get time and cumulative frames in order
     times = sorted(band_data.keys())
@@ -130,7 +130,7 @@ for band_idx, band_data in enumerate(packets_sent_time):
                  label=f'Band {band_idx + 1} Node {node_idx + 1}, Data Load: {DATA_LOAD_PERCENT_FDM[band_idx][node_idx]}.')
 
     # Plot title and labels
-    plt.title(f'FDM+TDM(dynamic): Packet Transmission Over Time. Band{band_idx+1} packets sent: {packets_sent[band_idx]} '
+    plt.title(f'FDM+TDM(dynamic): Packet Transmission Over Time. Band{band_idx+1} packets sent: {packets_sent[band_idx]}\n'
               f'Band {band_idx+1} throughput: {packets_sent[band_idx] / SIMULATION_TIME} packets/time unit ')
     plt.xlabel('Time (Unit)')
     plt.ylabel('Cumulative Packets Sent')
