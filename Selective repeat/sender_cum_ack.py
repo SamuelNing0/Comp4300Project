@@ -26,6 +26,8 @@ class Sender(threading.Thread):
         self.total_frames_per_attempt = [0] * self.__total_frames
         self.total_retransmissions = 0  # Track total retransmissions
 
+        self.__all_ack_frame = []
+
     def set_window_size(self, window_size):
         self.__window_size = window_size
 
@@ -68,18 +70,22 @@ class Sender(threading.Thread):
             while not self.__sender_queue.empty():
                 ack_frame = self.__sender_queue.get()
 
-                with self.__print_lock:
-                    print("ACK received for frame", ack_frame.seq_num, flush=True)
+                for seq_num in ack_frame.seq_num_list:
+                    if seq_num not in self.__all_ack_frame:
+                        with self.__print_lock:
+                            print("ACK received for frame", seq_num, flush=True)
 
-                if ack_frame.seq_num == self.__send_base:
+                        if seq_num == self.__send_base:
+                            self.__send_base += 1
+                        else:
+                            self.__buff.append(seq_num)
+
+                        self.__all_ack_frame.append(seq_num)
+
+                        self.__manager.cancel_timer(seq_num)
+
+                while self.__send_base in self.__buff:
+                    self.__buff.remove(self.__send_base)
                     self.__send_base += 1
-                else:
-                    self.__buff.append(ack_frame.seq_num)
-
-                self.__manager.cancel_timer(ack_frame.seq_num)
-
-            while self.__send_base in self.__buff:
-                self.__buff.remove(self.__send_base)
-                self.__send_base += 1
 
 
