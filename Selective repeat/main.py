@@ -21,13 +21,21 @@ def graph(total_attempts, ylabel_title, ylabel, cum_ack):
     plt.show()
 
 
-if __name__ == '__main__':
-    use_cum_ack = True
+def main(cumulative_ack, loss_rate):
 
-    sr = SelectiveRepeat(300)
-    sr.run(use_cum_ack, 10, 4, 0.01, 0.3, 20)
+    sr = SelectiveRepeat(500)
+    sr.run(cumulative_ack, 5, 1, 0.01, 0.05, loss_rate)
     sr.print_stats()
-    graph(sr.total_frame_send, "Total Frames Send Per Attempt", sr.total_frames_per_attempt, use_cum_ack)
-    graph(sr.total_frame_send, "Cumulative Attempt Count", sr.cumulative_frame_count, use_cum_ack)
+    graph(sr.total_frame_send, "Total Frames Send Per Attempt", sr.total_frames_per_attempt, cumulative_ack)
+    graph(sr.total_frame_send, "Cumulative Attempt Count", sr.cumulative_frame_count, cumulative_ack)
 
 
+if __name__ == '__main__':
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Selective Repeat Simulation")
+    parser.add_argument("-lr", "--loss-rate", type=int, default=5, help="Frame loss rate")
+    parser.add_argument("-cum-ack", "--cumulative-ack", action="store_true", help="Enable cumulative acknowledgment")
+    args = parser.parse_args()
+
+    main(args.cumulative_ack, args.loss_rate)
