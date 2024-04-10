@@ -14,11 +14,14 @@ class Network(threading.Thread):
         self.__stop_event = threading.Event()
         self.__min_delay = 0.01
         self.__max_delay = 0.1
-        self.__frame_loss_rate = 10
+        self.__frame_loss_rate = 20
 
     def set_network_delay_time(self, min_delay, max_delay):
         self.__min_delay = min_delay
         self.__max_delay = max_delay
+
+    def set_frame_loss_rate(self, frame_loss_rate):
+        self.__frame_loss_rate = frame_loss_rate
 
     def run(self):
         while not self.__stop_event.is_set():
